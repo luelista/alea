@@ -34,6 +34,7 @@ impl TryFrom<u32> for Instruction {
             0b00111 => JmpAbs(id),
             0b01000 => Ld(id),
             0b01001 => Sto(id),
+            0b01010 => return Err(CPUError::InvalidInstruction),
             0b01011 => Push(id),
             0b01100 => Pop(id),
             0b01101 => Mov(id),
