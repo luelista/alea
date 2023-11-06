@@ -1,0 +1,64 @@
+# 0000: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":false,"var":{"Mov":{"RegisterAndU32":["R1",null]}}}
+# 0004: 
+0x00008000
+# 0008: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":false,"var":{"Mov":{"RegisterAndU32":["R9",null]}}}
+# 000c: 
+0x00002000
+# 0010: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":true,"var":"Set"}
+# 0014: 
+{"cmp":{"gt":false,"eq":false,"lt":false},"sign":false,"var":"Nop"}
+# 0018: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":false,"var":{"Ld":{"TwoRegisters":["R0","R9"]}}}
+# 001c: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":false,"var":{"Cmp":{"OneRegister":"R0"}}}
+# 0020: 
+{"cmp":{"gt":false,"eq":true,"lt":false},"sign":false,"var":{"Jmp":{"RegisterAndU8":["R0",5]}}}
+# 0024: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":false,"var":{"Sto":{"TwoRegisters":["R0","R1"]}}}
+# 0028: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":false,"var":{"Add":{"RegisterAndU8":["R1",4]}}}
+# 002c: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":false,"var":{"Add":{"RegisterAndU8":["R9",4]}}}
+# 0030: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":true,"var":{"Jmp":{"RegisterAndU8":["R0",6]}}}
+# 0034: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":false,"var":{"Mov":{"RegisterAndU32":["R1",null]}}}
+# 0038: 
+0x00008000
+# 003c: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":false,"var":{"Mov":{"RegisterAndU32":["R9",null]}}}
+# 0040: 
+0x0000006c
+# 0044: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":true,"var":"Set"}
+# 0048: 
+{"cmp":{"gt":false,"eq":false,"lt":false},"sign":false,"var":"Nop"}
+# 004c: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":false,"var":{"Ld":{"TwoRegisters":["R0","R9"]}}}
+# 0050: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":false,"var":{"Cmp":{"OneRegister":"R0"}}}
+# 0054: 
+{"cmp":{"gt":false,"eq":true,"lt":false},"sign":false,"var":{"Jmp":{"RegisterAndU8":["R0",5]}}}
+# 0058: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":false,"var":{"Sto":{"TwoRegisters":["R0","R1"]}}}
+# 005c: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":false,"var":{"Add":{"RegisterAndU8":["R1",4]}}}
+# 0060: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":false,"var":{"Add":{"RegisterAndU8":["R9",4]}}}
+# 0064: 
+{"cmp":{"gt":true,"eq":true,"lt":true},"sign":true,"var":{"Jmp":{"RegisterAndU8":["R0",6]}}}
+# 0068: 
+{"cmp":{"gt":false,"eq":true,"lt":false},"sign":false,"var":"Halt"}
+# 006c: 
+{"cmp":{"gt":true,"eq":true,"lt":false},"sign":false,"var":{"Pop":{"RegisterAndU8":["R6",104]}}}
+# 0070: 
+{"cmp":{"gt":false,"eq":false,"lt":false},"sign":true,"var":{"Call":{"TwoRegisters":["R6","SA"]}}}
+# 0074: 
+{"cmp":{"gt":false,"eq":false,"lt":true},"sign":false,"var":{"Pop":{"TwoRegistersAndU8":["R6","R9",109]}}}
+# 0078: 
+{"cmp":{"gt":false,"eq":true,"lt":false},"sign":false,"var":{"Cmp":{"TwoRegistersAndU32":["R3","CS",null]}}}
+# 007c: 
+0x17000000
