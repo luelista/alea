@@ -1,17 +1,49 @@
 
-use std::{fs::File, io::Read, env};
+use std::{fs::File, io::Read, ops::Range};
 
 use alea_core::prelude::*;
 
 use bytes::BytesMut;
+use clap::Parser;
+
+
+fn parse_range(s: &str) -> Result<Range::<u32>, &'static str> {
+    let (x, y) = s.split_once('-').ok_or("missing -")?;
+
+    let x_fromstr = u32::from_str_radix(x, 16).map_err(|_| "ParseError")?;
+    let y_fromstr = u32::from_str_radix(y, 16).map_err(|_| "ParseError")?;
+
+    Ok(Range::<u32> { start: x_fromstr, end: y_fromstr })
+}
+
+fn is_in_range(x: u32, ranges: &Vec<Range::<u32>>) -> bool {
+    for range in ranges {
+        if range.contains(&x) {
+            return true
+        }
+    }
+    return false
+}
+
+/// Search for a pattern in a file and display the lines that contain it.
+#[derive(Parser, Debug)]
+struct Cli {
+    /// Skip blocks of at least this number of null bytes
+    #[arg(short = 'z', long, default_value_t = 12)]
+    skip_zeros: u32,
+    /// Force interpretation as data blocks
+    #[arg(short = 'd', long, value_parser = parse_range)]
+    force_data: Vec<Range::<u32>>,
+    /// The path to the file to read
+    infile: std::path::PathBuf,
+}
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
-
-    let path = &args[1];
+    let cli = Cli::parse();
+    println!("# {:?}", cli);
 
 	let mut buffer = Vec::new();
-	let mut file = File::open(path).unwrap();
+	let mut file = File::open(cli.infile).unwrap();
 
 	file.read_to_end(&mut buffer).unwrap();
 
@@ -21,18 +53,22 @@ fn main() {
 
     while index < program.size() {
         let instr_word = program.read_u32(index);
-        if instr_word == 0 {
+        if instr_word == 0 && cli.skip_zeros > 0 {
             let mut zeroidx = index;
             while zeroidx < program.size() && program.read_u32(zeroidx + 4) == 0 {
                 zeroidx += 4;
             }
-            if zeroidx - index > 16 {
+            if zeroidx - index > cli.skip_zeros {
                 index = zeroidx + 4;
                 print!("\n\n{:04x}: ", index);
                 continue;
             }
         }
-        
+        if is_in_range(index, &cli.force_data) {
+            println!("\t\t\t\t0x{:08x}", instr_word);
+            index += 4;
+            continue;
+        }
         match <u32 as TryInto<Instruction>>::try_into(instr_word) {
             Ok(instr) => {
                 match instr.var {
