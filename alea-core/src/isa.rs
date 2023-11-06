@@ -12,8 +12,9 @@ use std::{
     fmt::Display,
     ops::{Index, IndexMut},
 };
+use serde::{Serialize, Deserialize};
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 pub enum Register {
     R0,
     R1,
@@ -80,6 +81,31 @@ impl TryFrom<u8> for Register {
     }
 }
 
+impl Into<u8> for Register {
+    fn into(self) -> u8 {
+        use Register::*;
+
+        match self {
+            R0 => 0b0000,
+            R1 => 0b0001,
+            R2 => 0b0010,
+            R3 => 0b0011,
+            R4 => 0b0100,
+            R5 => 0b0101,
+            R6 => 0b0110,
+            R7 => 0b0111,
+            R8 => 0b1000,
+            R9 => 0b1001,
+            CS => 0b1010,
+            CA => 0b1011,
+            ST => 0b1100,
+            IA => 0b1101,
+            RA => 0b1110,
+            SA => 0b1111,
+        }
+    }
+}
+
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct State(pub u32);
 
@@ -93,7 +119,7 @@ bitflags::bitflags! {
     }
 }
 
-#[derive(Clone, Copy, Default, Debug)]
+#[derive(Clone, Copy, Default, Debug, Serialize, Deserialize)]
 pub struct CmpFlags {
     pub gt: bool,
     pub eq: bool,
@@ -305,7 +331,7 @@ impl Display for RegisterFile {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 pub struct Instruction {
     pub cmp: CmpFlags,
     pub sign: bool,
@@ -341,7 +367,7 @@ impl Display for Instruction {
     }
 }
 
-#[derive(Default, Clone, Copy, Debug)]
+#[derive(Default, Clone, Copy, Debug, Serialize, Deserialize)]
 /// first 5 bits: instruction variant
 /// last 16 bits: decode into instruction data
 /// bits 6-8: cmp bits, gt eq lt
@@ -391,7 +417,7 @@ pub enum InstVariant {
 pub type UpcomingU32 = ();
 
 // up to 16 bits large
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, Serialize, Deserialize)]
 pub enum InstructionData {
     OneRegister(Register),
     TwoRegisters(Register, Register),

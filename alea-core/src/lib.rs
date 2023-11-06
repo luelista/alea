@@ -1,4 +1,5 @@
 mod decode;
+mod encode;
 pub mod isa;
 pub mod memory;
 pub mod vcore;
