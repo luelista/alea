@@ -155,6 +155,38 @@ impl Display for CmpFlags {
     }
 }
 
+impl Into<&str> for CmpFlags {
+    fn into(self) -> &'static str {
+        match (self.gt, self.eq, self.lt) {
+            (true, true, true) => "ALL",
+            (true, true, false) => "GE",
+            (true, false, true) => "NE",
+            (false, true, true) => "LE",
+            (true, false, false) => "GT",
+            (false, true, false) => "EQ",
+            (false, false, true) => "LT",
+            (false, false, false) => "NONE",
+        }
+    }
+}
+
+impl TryFrom<&str> for CmpFlags {
+    type Error = ();
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        match value {
+            "ALL" => Ok(CmpFlags { gt: true, eq: true, lt: true }),
+            "GE" => Ok(CmpFlags { gt: true, eq: true, lt: false }),
+            "NE" => Ok(CmpFlags { gt: true, eq: false, lt: true }),
+            "LE" => Ok(CmpFlags { gt: false, eq: true, lt: true }),
+            "GT" => Ok(CmpFlags { gt: true, eq: false, lt: false }),
+            "EQ" => Ok(CmpFlags { gt: false, eq: true, lt: false }),
+            "LT" => Ok(CmpFlags { gt: false, eq: false, lt: true }),
+            "NONE" => Ok(CmpFlags { gt: false, eq: false, lt: false }),
+            &_ => Err(()),
+        }
+    }
+}
+
 impl Into<State> for CmpFlags {
     fn into(self) -> State {
         self.gt.then_some(State::CMP_GT).unwrap_or(State(0))
